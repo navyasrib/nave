@@ -25,4 +25,11 @@ describe('operators', function() {
         var actual = parser.parse('BOOLEAN c IS 12 GREATERTHAN 10.')
         assert.deepEqual(expected, actual);
     });
+
+    it('string join', function() {
+        var declaration = lib.declare(classes.Str, 'd')
+        var expected = lib.assignValue(declaration, new classes.Str('hello world'));
+        var actual = parser.parse('STR d IS "hello" JOIN " world".')
+        assert.deepEqual(expected, actual);
+    });
 });

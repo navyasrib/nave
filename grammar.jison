@@ -4,7 +4,10 @@
   var lib = require(pwd+'/lib');
   var flatten = function(array){
     return [].concat.apply([],array);
-  }
+  };
+  var trim = function(string) {
+      return string.slice(1, string.length - 1);
+  };
 %}
 
 %lex
@@ -12,7 +15,7 @@
 \s+                         /* skip whitespace */
 [0-9]+("."[0-9]+)?\b        return 'NUMBER'
 [a-z]+                      return 'IDENTIFIER'
-["]+[A-z0-9]+["]            return 'STRING'
+["]+[A-z0-9 ]+["]            return 'STRING'
 "NUM"                       return 'NUM'
 "STR"                       return 'STR'
 "BOOLEAN"                   return 'BOOLEAN'
@@ -104,9 +107,15 @@ type
 
 nos
     : E
-    | STRING
-      {$$ = new classes.Str(yytext)}
+    | string
     | boolean
+    ;
+
+string
+    : STRING
+      {$$ = new classes.Str(trim(yytext))}
+    | string '+' string
+      {$$ = $1.join($3)}
     ;
 
 boolean

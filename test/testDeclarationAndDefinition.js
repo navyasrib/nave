@@ -39,7 +39,7 @@ describe('assignment', function() {
     it('STR s. s IS "somthing".', function() {
         var type = classes.Str;
         var variable = lib.declare(type, 's');
-        var string = new classes.Str('"somthing"');
+        var string = new classes.Str('somthing');
         var assign = lib.assignValue(variable, string)
 
         var expected = [variable, assign];
@@ -52,7 +52,7 @@ describe('assignment', function() {
         var type = classes.Str;
         var variableN = lib.declare(type, 'n');
         var variableV = lib.declare(type, 'v')
-        var string = new classes.Str('"somthing"');
+        var string = new classes.Str('somthing');
 
         var assignN = lib.assignValue(variableN, string)
         var assignV = lib.assignVariable(variableV, variableN)
@@ -80,7 +80,7 @@ describe('declare and Define', function() {
     it('STR s IS "somthing".', function() {
         var type = classes.Str;
         var variable = lib.declare(type, 's');
-        var string = new classes.Str('"somthing"');
+        var string = new classes.Str('somthing');
 
         var expected = lib.assignValue(variable, string)
         var actual = parser.parse('STR s IS "somthing".');

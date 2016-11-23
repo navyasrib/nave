@@ -4,7 +4,7 @@ class Str {
     }
 
     join(other) {
-        return this.value.concat(other.value)
+        return new Str(this.value.concat(other.value));
     }
 
     toString() {
@@ -17,7 +17,3 @@ class Str {
 }
 
 module.exports = Str;
-
-var trim = function(string) {
-    return string.slice(1, string.length - 1);
-};
