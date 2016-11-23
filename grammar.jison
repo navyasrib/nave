@@ -13,25 +13,25 @@
 [0-9]+("."[0-9]+)?\b        return 'NUMBER'
 [a-z]+                      return 'IDENTIFIER'
 ["]+[A-z0-9]+["]            return 'STRING'
-"Num"                       return 'NUM'
-"Str"                       return 'STR'
-"Boolean"                   return 'BOOLEAN'
-"plus"                      return '+'
-"true"                      return 'TRUE'
-"false"                     return 'FALSE'
-"minus"                     return '-'
-"amplify"                   return '*'
-"simplify"                  return '/'
-"join"                      return '+'
-"equals"                    return '=='
-"greaterThan"               return '>'
-"lessThan"                  return '<'
-"not"                       return '!'
+"NUM"                       return 'NUM'
+"STR"                       return 'STR'
+"BOOLEAN"                   return 'BOOLEAN'
+"PLUS"                      return '+'
+"TRUE"                      return 'TRUE'
+"FALSE"                     return 'FALSE'
+"MINUS"                     return '-'
+"AMPLIFY"                   return '*'
+"SIMPLIFY"                  return '/'
+"JOIN"                      return '+'
+"EQUALS"                    return '=='
+"GREATERTHAN"               return '>'
+"LESSTHAN"                  return '<'
+"NOT"                       return '!'
 "IS"                        return '='
-"incase"                    return "IF"
-"unless"                    return "UNLESS"
-"do"                        return 'START'
-"end"                       return 'END'
+"INCASE"                    return "IF"
+"UNLESS"                    return "UNLESS"
+"DO"                        return 'START'
+"HLT"                       return 'HLT'
 "."                         return 'EOS'
 <<EOF>>                     return 'EOF'
 .                           return 'INVALID'
@@ -40,7 +40,7 @@
 
 /* operator associations and precedence */
 
-/*%left '='
+%left '='
 %right IDENTIFIER
 %left '+' '-'
 %left '*' '/'
@@ -48,7 +48,7 @@
 %left '>'
 %left '<'
 %left UMINUS
-%left EOS*/
+%left EOS
 
 %start expressions
 
@@ -98,35 +98,34 @@ type
       { $$ = classes.Num}
     | STR
       {$$ = classes.Str}
+    | BOOLEAN
+      {$$ = classes.Bool}
     ;
 
 nos
     : E
     | STRING
       {$$ = new classes.Str(yytext)}
+    | boolean
+    ;
+
+boolean
+    : TRUE
+        {$$ = new classes.Bool(true)}
+    | FALSE
+        {$$ = new classes.Bool(false)}
     ;
 
 E
-    : NUMBER
-        {$$ = new classes.Num(yytext)}
+    : number
+    | number operator E
+        {$$ = $1[$2.toLowerCase()]($3);}
     ;
-/*
-E
-    : nos '+' nos
-    | E '-' E
-    | E '*' E
-    | E '/' E
-    | E '>' E
-    | E '<' E
-    | E '==' E
-    | '!' E
-    | UMINUS E
-    | NUMBER
-    | variable
-    ;
-nos
-    : E
-    | STRING
-variable
-    : IDENTIFIER
-    ;*/
+
+number
+    : NUMBER {$$ = new classes.Num(yytext)}
+    | '-' number %prec UMINUS
+        {$$ = $2.negate()};
+
+operator
+    : '+' | '-' | '*' | '/' | '<' | '>' | '==' ;

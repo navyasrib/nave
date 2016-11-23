@@ -1,3 +1,5 @@
+const Bool = require('./Bool');
+
 class Num {
     constructor(value) {
         this.value = Number(value);
@@ -8,31 +10,35 @@ class Num {
     }
 
     plus(numeral) {
-        return new Num(this.value + numberal.value);
+        return new Num(this.value + numeral.value);
     }
 
-    minus(numberal) {
-        return new Num(this.value - numberal.value);
+    minus(numeral) {
+        return new Num(this.value - numeral.value);
     }
 
-    amplify(numberal) {
-        return new Num(this.value * numberal.value);
+    amplify(numeral) {
+        return new Num(this.value * numeral.value);
     }
 
-    simplify(numberal) {
-        return new Num(this.value / numberal.value);
+    simplify(numeral) {
+        return new Num(this.value / numeral.value);
     }
 
-    greaterThan(numberal) {
-        return new Boolean(this.value > numberal.value);
+    greaterthan(numeral) {
+        return new Bool(this.value > numeral.value);
     }
 
-    lessThan(numberal) {
-        return new Boolean(this.value < numberal.value);
+    lessthan(numeral) {
+        return new Bool(this.value < numeral.value);
     }
 
-    equals(numberal) {
-        return new Boolean(this.value === numeral.value);
+    equals(numeral) {
+        return new Bool(this.value === numeral.value);
+    }
+
+    negate() {
+        return new Num(-this.value);
     }
 }
 
