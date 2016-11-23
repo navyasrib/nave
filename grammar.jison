@@ -79,13 +79,13 @@ declaration
 
 assignment
     : declaration '=' nos
-        { $$ = lib.declareAndDefine($1,$2,$4)}
+        { $$ = lib.assignValue($1,$3)}
     | declaration '=' variable
-        {$$ = lib.declareAndDefine($1,$2,$4)}
+        {$$ = lib.assignVariable($1,$3)}
     | variable '=' nos
         {$$ = lib.assignValue($1,$3)}
     | variable '=' variable
-        {$$ = lib.assignValue($1,$3)}
+        {$$ = lib.assignVariable($1,$3)}
     ;
 
 variable
