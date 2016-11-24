@@ -8,7 +8,6 @@ Data Types
           -   greaterThan
           -   lessThan
           -   equals
-      -
 
   -   Str (String)
       - Methods
@@ -19,6 +18,22 @@ Data Types
       - True/False
       - Methods
           -   equals
+
+  -   Behavior
+      - contains set of statements
+      - Last statement will be the return value
+      - syntax:-
+          BEHAVIOR b = WITH params
+                       START
+                        statements...
+                        RET statement.
+                       HLT.
+
+          EXECUTE b WITH params
+
+          params = [type variable...]
+
+
 
 Operators
   -   is

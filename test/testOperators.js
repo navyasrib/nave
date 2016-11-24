@@ -32,4 +32,14 @@ describe('operators', function() {
         var actual = parser.parse('STR d IS "hello" JOIN " world".')
         assert.deepEqual(expected, actual);
     });
+
+    it('plus with variable', function() {
+        var declarationE = lib.declare(classes.Num, 'e');
+        var declarationF = lib.declare(classes.Num, 'f');
+        var assignE = lib.assignValue(declarationE, new classes.Num(12));
+        var assignF = lib.assignValue(declarationF, new classes.Num(15))
+        var expected = [assignE, assignF];
+        var actual = parser.parse('NUM e IS 12. NUM f IS e PLUS 3.')
+        assert.deepEqual(expected, actual);
+    });
 });

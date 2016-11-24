@@ -48,7 +48,7 @@ describe('assignment', function() {
         assert.deepEqual(expected, actual);
     });
 
-    it('STR n IS "somthing". Str v IS n.', function() {
+    it('STR n IS "somthing". STR v IS n.', function() {
         var type = classes.Str;
         var variableN = lib.declare(type, 'n');
         var variableV = lib.declare(type, 'v')
@@ -62,6 +62,19 @@ describe('assignment', function() {
 
         assert.deepEqual(expected, actual);
     });
+
+    it('STR l IS "somthing". NUM k IS l.', function() {
+        var expected = "Improper data type...";
+        try {
+            parser.parse('STR l IS "somthing". NUM k IS l.');
+        } catch (e) {
+            var actual = e.message;
+            assert.equal(expected, actual);
+            return;
+        }
+        assert.ok(false);
+    });
+
 });
 
 describe('declare and Define', function() {
