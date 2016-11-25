@@ -1,11 +1,11 @@
 class Operation {
-    constructor(operation, argument) {
-        this.operation = operation;
-        this.args = argument;
+    constructor(...args) {
+        this.operation = args[0];
+        this.args = args.slice(1);
     }
 
     evaluate() {
-        this.operation(this.argument.evaluate())
+        return this.operation.apply({}, this.args.map((d) => d.value || d.evaluate()));
     }
 }
 

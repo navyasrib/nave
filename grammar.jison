@@ -37,6 +37,8 @@
 "START"                     return 'START'
 "HLT"                       return 'HLT'
 "."                         return 'EOS'
+"BEHAVIOR"                  return 'BEHAVIOR'
+"EXECUTE"                   return 'EXECUTE'
 <<EOF>>                     return 'EOF'
 .                           return 'INVALID'
 
@@ -74,7 +76,26 @@ statement
     | assignment
     | conditional
     | block
-    | DISPLAY displayable
+    | execution
+    | print
+    ;
+
+print
+    : DISPLAY displayable
+        {$$ = new classes.Operation(lib.operations.print,$2)}
+    ;
+
+displayable
+    : E
+    | variable
+      {$$ = $1.value}
+    | string
+    | vare
+    ;
+
+execution
+    : EXECUTE variable
+        {$$ = new classes.Operation(lib.operations.executeBehavior($2))}
     ;
 
 declaration
@@ -83,11 +104,11 @@ declaration
     ;
 
 assignment
-    : declaration '=' nos
+    : declaration '=' assignable
         { $$ = lib.assignValue($1,$3)}
     | declaration '=' variable
         {$$ = lib.assignVariable($1,$3)}
-    | variable '=' nos
+    | variable '=' assignable
         {$$ = lib.assignValue($1,$3)}
     | variable '=' variable
         {$$ = lib.assignVariable($1,$3)}
@@ -105,13 +126,16 @@ type
       {$$ = classes.Str}
     | BOOLEAN
       {$$ = classes.Bool}
+    | BEHAVIOR
+      {$$ = classes.Behavior}
     ;
 
-nos
+assignable
     : E
     | string
     | boolean
     | vare
+    | block
     ;
 
 string

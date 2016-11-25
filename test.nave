@@ -1,8 +1,8 @@
 NUM x IS 1.
 
-BEHAVIOR c = WITH NUM a
+BEHAVIOR c IS WITH NUM a
              START
-                NUM d = a PLUS 10.
+                NUM d IS a PLUS 10.
                 RET d.
              HLT.
 
