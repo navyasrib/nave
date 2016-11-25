@@ -36,10 +36,43 @@ describe('operators', function() {
     it('plus with variable', function() {
         var declarationE = lib.declare(classes.Num, 'e');
         var declarationF = lib.declare(classes.Num, 'f');
-        var assignE = lib.assignValue(declarationE, new classes.Num(12));
-        var assignF = lib.assignValue(declarationF, new classes.Num(15))
+        var number = new classes.Num(12);
+
+        var assignE = lib.assignValue(declarationE, number);
+        var operation = new classes.Operation(lib.operations.plus, assignE, new classes.Num(3));
+        var assignF = lib.assignValue(declarationF, operation);
+
         var expected = [assignE, assignF];
         var actual = parser.parse('NUM e IS 12. NUM f IS e PLUS 3.')
+
+        assert.equal(JSON.stringify(expected), JSON.stringify(actual));
+    });
+
+    it('plus with multiple variables', function() {
+        var declarationG = lib.declare(classes.Num, 'g');
+        var declarationH = lib.declare(classes.Num, 'h');
+        var declarationI = lib.declare(classes.Num, 'i');
+        var numberG = new classes.Num(12);
+        var numberH = new classes.Num(3);
+
+        var assignG = lib.assignValue(declarationG, numberG);
+        var assignH = lib.assignValue(declarationH, numberH);
+        var operationHI = new classes.Operation(lib.operations.plus, assignH, new classes.Num(4));
+        var operationGHI = new classes.Operation(lib.operations.plus, assignG, operationHI);
+
+
+        var assignI = lib.assignValue(declarationI, operationGHI);
+
+        var expected = [assignG, assignH, assignI];
+        var actual = parser.parse('NUM g IS 12. NUM h IS 3. NUM i IS g PLUS h PLUS 4.')
+
+        assert.equal(JSON.stringify(expected), JSON.stringify(actual));
+    });
+
+    it('plus with multiple numbers', function() {
+        var declaration = lib.declare(classes.Num, 'aa')
+        var expected = lib.assignValue(declaration, new classes.Num(12));
+        var actual = parser.parse('NUM aa IS 2 PLUS 1 PLUS 5 PLUS 4.')
         assert.deepEqual(expected, actual);
     });
 });

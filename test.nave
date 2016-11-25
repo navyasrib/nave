@@ -1,0 +1,9 @@
+NUM x IS 1.
+
+BEHAVIOR c = WITH NUM a
+             START
+                NUM d = a PLUS 10.
+                RET d.
+             HLT.
+
+EXECUTE c WITH x.

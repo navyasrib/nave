@@ -85,12 +85,12 @@ declaration
 assignment
     : declaration '=' nos
         { $$ = lib.assignValue($1,$3)}
-    /*| declaration '=' variable
-        {$$ = lib.assignVariable($1,$3)}*/
+    | declaration '=' variable
+        {$$ = lib.assignVariable($1,$3)}
     | variable '=' nos
         {$$ = lib.assignValue($1,$3)}
-    /*| variable '=' variable
-        {$$ = lib.assignVariable($1,$3)}*/
+    | variable '=' variable
+        {$$ = lib.assignVariable($1,$3)}
     ;
 
 variable
@@ -111,6 +111,7 @@ nos
     : E
     | string
     | boolean
+    | vare
     ;
 
 string
@@ -128,29 +129,47 @@ boolean
     ;
 
 E
-    : value
-    | value '+' E
+    : number
+    | number '+' E
         {$$ = $1['plus']($3);}
-    | value '-' E
+    | number '-' E
         {$$ = $1['minus']($3);}
-    | value '*' E
+    | number '*' E
         {$$ = $1['amplify']($3);}
-    | value '/' E
+    | number '/' E
         {$$ = $1['simplify']($3);}
-    | value '<' E
-        {$$ = $1['lessThan']($3);}
-    | value '>' E
-        {$$ = $1['greaterThan']($3);}
-    | value '==' E
+    | number '<' E
+        {$$ = $1['lessthan']($3);}
+    | number '>' E
+        {$$ = $1['greaterthan']($3);}
+    | number '==' E
         {$$ = $1['equals']($3);}
     ;
 
-value
+vare
+    : vare operator E
+        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
+    | E operator vare
+        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
+    | variable operator vare
+        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
+    | vare operator variable
+        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
+    | variable operator E
+        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
+    | E operator variable
+        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
+    | variable operator variable
+        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
+    ;
+
+operator
+    : '+' | '-' | '*' | '/' | '<' | '>' | '==' ;
+
+number
     : NUMBER {$$ = new classes.Num(yytext)}
-    | '-' value %prec UMINUS
+    | '-' number %prec UMINUS
         {$$ = $2.negate()}
-    | variable
-        {$$ = $1.value}
     ;
 
 block
