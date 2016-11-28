@@ -4,8 +4,8 @@ class Operation {
         this.args = args.slice(1);
     }
 
-    evaluate() {
-        return this.operation.apply({}, this.args.map((d) => d.value || d.evaluate()));
+    evaluate(object) {
+        return this.operation.apply(object, this.args);
     }
 }
 

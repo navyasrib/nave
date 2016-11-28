@@ -1,11 +1,15 @@
 class Behavior {
+
     constructor(statements, args) {
         this.statements = statements;
         this.args = args;
     }
 
     execute() {
-        //do something
+        var obj = {};
+        this.statements.forEach(function(statement) {
+            statement.evaluate(obj);
+        });
     }
 }
 

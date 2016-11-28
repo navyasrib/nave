@@ -57,9 +57,8 @@ describe('operators', function() {
 
         var assignG = lib.assignValue(declarationG, numberG);
         var assignH = lib.assignValue(declarationH, numberH);
-        var operationHI = new classes.Operation(lib.operations.plus, assignH, new classes.Num(4));
-        var operationGHI = new classes.Operation(lib.operations.plus, assignG, operationHI);
-
+        var operationGH = new classes.Operation(lib.operations.plus, assignG, assignH);
+        var operationGHI = new classes.Operation(lib.operations.plus, operationGH, new classes.Num(4));
 
         var assignI = lib.assignValue(declarationI, operationGHI);
 

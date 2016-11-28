@@ -25,11 +25,11 @@ class Num {
         return new Num(this.value / numeral.value);
     }
 
-    greaterthan(numeral) {
+    greaterThan(numeral) {
         return new Bool(this.value > numeral.value);
     }
 
-    lessthan(numeral) {
+    lessThan(numeral) {
         return new Bool(this.value < numeral.value);
     }
 
@@ -39,6 +39,10 @@ class Num {
 
     negate() {
         return new Num(-this.value);
+    }
+
+    evaluate() {
+        return this.value;
     }
 }
 

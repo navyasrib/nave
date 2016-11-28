@@ -15,7 +15,7 @@
 \s+                         /* skip whitespace */
 [0-9]+("."[0-9]+)?\b        return 'NUMBER'
 [a-z]+                      return 'IDENTIFIER'
-["]+[A-z0-9 ]+["]           return 'STRING'
+["]+[A-z .]+["]             return 'STRING'
 "NUM"                       return 'NUM'
 "STR"                       return 'STR'
 "BOOLEAN"                   return 'BOOLEAN'
@@ -46,14 +46,14 @@
 
 /* operator associations and precedence */
 
-%left '='
+%right '=' variable
 %right IDENTIFIER
 %left '+' '-'
 %left '*' '/'
 %left '!'
-%left '>'
-%left '<'
+%left '>' '<' '=='
 %left UMINUS
+%right E
 %left EOS
 
 %start expressions
@@ -87,10 +87,7 @@ print
 
 displayable
     : E
-    | variable
-      {$$ = $1.value}
     | string
-    | vare
     ;
 
 execution
@@ -105,13 +102,13 @@ declaration
 
 assignment
     : declaration '=' assignable
-        { $$ = lib.assignValue($1,$3)}
-    | declaration '=' variable
-        {$$ = lib.assignVariable($1,$3)}
+        { $$ = lib.assignment($1,$3)}
+    /*| declaration '=' variable
+        {$$ = lib.assignVariable($1,$3)}*/
     | variable '=' assignable
-        {$$ = lib.assignValue($1,$3)}
-    | variable '=' variable
-        {$$ = lib.assignVariable($1,$3)}
+        {$$ = lib.assignment($1,$3)}
+    /*| variable '=' variable
+        {$$ = lib.assignVariable($1,$3)}*/
     ;
 
 variable
@@ -134,8 +131,9 @@ assignable
     : E
     | string
     | boolean
-    | vare
     | block
+    /*| variable
+      {$$= $1.value}*/
     ;
 
 string
@@ -154,41 +152,25 @@ boolean
 
 E
     : number
-    | number '+' E
-        {$$ = $1['plus']($3);}
-    | number '-' E
-        {$$ = $1['minus']($3);}
-    | number '*' E
-        {$$ = $1['amplify']($3);}
-    | number '/' E
-        {$$ = $1['simplify']($3);}
-    | number '<' E
-        {$$ = $1['lessthan']($3);}
-    | number '>' E
-        {$$ = $1['greaterthan']($3);}
-    | number '==' E
-        {$$ = $1['equals']($3);}
+    | E '+' E
+        {$$ = lib.mathOperation('plus',$1,$3);}
+    | E '-' E
+        {$$ = lib.mathOperation('minus',$1,$3);}
+    | E '*' E
+        {$$ = lib.mathOperation('amplify',$1,$3);}
+    | E '/' E
+        {$$ = lib.mathOperation('simplify',$1,$3);}
+    | E '<' E
+        {$$ = lib.mathOperation('lessThan',$1,$3);}
+    | E '>' E
+        {$$ = lib.mathOperation('greaterThan',$1,$3);}
+    | E '==' E
+        {$$ = lib.mathOperation('equals',$1,$3);}
+    | variable
     ;
 
-vare
-    : vare operator E
-        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
-    | E operator vare
-        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
-    | variable operator vare
-        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
-    | vare operator variable
-        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
-    | variable operator E
-        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
-    | E operator variable
-        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
-    | variable operator variable
-        {$$ = new classes.Operation(lib.operations[$2.toLowerCase()], $1, $3)}
-    ;
-
-operator
-    : '+' | '-' | '*' | '/' | '<' | '>' | '==' ;
+/*operator
+    : '+' | '-' | '*' | '/' | '<' | '>' | '==' ;*/
 
 number
     : NUMBER {$$ = new classes.Num(yytext)}

@@ -14,6 +14,10 @@ class Str {
     equals(other) {
         return new Boolean(this.value === other.value);
     }
+
+    evaluate() {
+        return this.value;
+    }
 }
 
 module.exports = Str;

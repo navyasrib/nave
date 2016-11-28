@@ -12,6 +12,14 @@ class Var {
     setValue(value) {
         this.value = value;
     }
+
+    evaluate() {
+        return this.value;
+    }
+
+    execute() {
+        return this.value;
+    }
 }
 
 module.exports = Var;
