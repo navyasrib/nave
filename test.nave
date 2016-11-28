@@ -1,9 +1,6 @@
 NUM x IS 1.
-
-BEHAVIOR c IS WITH NUM a
-             START
-                NUM d IS a PLUS 10.
-                RET d.
-             HLT.
-
-EXECUTE c WITH x.
+NUM y IS 2.
+NUM z IS x PLUS 12.
+NUM a IS x PLUS y PLUS z.
+NUM b IS a.
+DISPLAY b.

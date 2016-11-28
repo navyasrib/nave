@@ -120,3 +120,18 @@ describe('declare and Define', function() {
         assert.deepEqual(expected, actual);
     });
 });
+
+describe('edge cases', function() {
+    it('self assiging variables', function() {
+        var print = this.sinon.stub(lib.operations, 'print');
+        var parsedValue = parser.parse('START NUM x IS 1. x IS x PLUS 12. HLT.');
+
+        var varx = new classes.Var(classes.Num, 'x')
+        varx.setValue(new classes.Num(1));
+        expectedArg = new classes.Operation(lib.operations.plus, varx, new classes.Num(12));
+
+        parsedValue.execute();
+
+        // assert.ok(print.calledWith(expectedArg));
+    });
+});

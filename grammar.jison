@@ -46,14 +46,12 @@
 
 /* operator associations and precedence */
 
-%right '=' variable
-%right IDENTIFIER
+%right '='
 %left '+' '-'
 %left '*' '/'
 %left '!'
 %left '>' '<' '=='
 %left UMINUS
-%right E
 %left EOS
 
 %start expressions

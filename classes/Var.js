@@ -14,7 +14,7 @@ class Var {
     }
 
     evaluate() {
-        return this.value;
+        return this.value.evaluate && this.value.evaluate() || this.value;
     }
 
     execute() {
