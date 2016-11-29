@@ -7,28 +7,28 @@ const assert = require('assert');
 describe('operators', function() {
     it('plus', function() {
         var declaration = lib.declare(classes.Num, 'a')
-        var expected = lib.assignValue(declaration, new classes.Num(12));
+        var expected = [lib.assignValue(declaration, new classes.Num(12))];
         var actual = parser.parse('NUM a IS 2 PLUS 10.')
         assert.deepEqual(expected, actual);
     });
 
     it('negate', function() {
         var declaration = lib.declare(classes.Num, 'b')
-        var expected = lib.assignValue(declaration, new classes.Num(8));
+        var expected = [lib.assignValue(declaration, new classes.Num(8))];
         var actual = parser.parse('NUM b IS MINUS 2 PLUS 10.')
         assert.deepEqual(expected, actual);
     });
 
     it('greaterthan', function() {
         var declaration = lib.declare(classes.Bool, 'c')
-        var expected = lib.assignValue(declaration, new classes.Bool(true));
+        var expected = [lib.assignValue(declaration, new classes.Bool(true))];
         var actual = parser.parse('BOOLEAN c IS 12 GREATERTHAN 10.')
         assert.deepEqual(expected, actual);
     });
 
     it('string join', function() {
         var declaration = lib.declare(classes.Str, 'd')
-        var expected = lib.assignValue(declaration, new classes.Str('hello world'));
+        var expected = [lib.assignValue(declaration, new classes.Str('hello world'))];
         var actual = parser.parse('STR d IS "hello" JOIN " world".')
         assert.deepEqual(expected, actual);
     });
@@ -70,7 +70,7 @@ describe('operators', function() {
 
     it('plus with multiple numbers', function() {
         var declaration = lib.declare(classes.Num, 'aa')
-        var expected = lib.assignValue(declaration, new classes.Num(12));
+        var expected = [lib.assignValue(declaration, new classes.Num(12))];
         var actual = parser.parse('NUM aa IS 2 PLUS 1 PLUS 5 PLUS 4.')
         assert.deepEqual(expected, actual);
     });

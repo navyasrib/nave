@@ -5,7 +5,7 @@ class Behavior {
         this.args = args;
     }
 
-    execute() {
+    evaluate() {
         var obj = {};
         this.statements.forEach(function(statement) {
             statement.evaluate(obj);

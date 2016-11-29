@@ -14,11 +14,11 @@ class Var {
     }
 
     evaluate() {
-        return this.value.evaluate && this.value.evaluate() || this.value;
+        return this.value;
     }
 
     execute() {
-        return this.value;
+        return this.value.evaluate && this.value.evaluate() || this.value;
     }
 }
 

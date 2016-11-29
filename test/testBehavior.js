@@ -10,7 +10,7 @@ describe('behavior with start and hlt block', function() {
         var variableA = lib.declare(classes.Num, 'a')
         var assignA = lib.assignValue(variableA, new classes.Num(2));
         var assignB = lib.assignValue(variableB, new classes.Num(6));
-        var expected = new classes.Behavior([assignA, assignB]);
+        var expected = [new classes.Behavior([assignA, assignB])];
         var actual = parser.parse('START NUM a IS 2. NUM b IS 3 PLUS 3. HLT.');
         assert.deepEqual(expected, actual);
     });
@@ -21,7 +21,7 @@ describe('behavior with start and hlt block', function() {
         var assignC = lib.assignValue(variableC, new classes.Num(2));
         var assignD = lib.assignValue(variableD, new classes.Num(6));
         var variableBehave = lib.declare(classes.Behavior, 'behave');
-        var expected = lib.assignValue(variableBehave, new classes.Behavior([assignC, assignD]));
+        var expected = [lib.assignValue(variableBehave, new classes.Behavior([assignC, assignD]))];
 
         var actual = parser.parse('BEHAVIOR behave IS START NUM c IS 2. NUM d IS 3 PLUS 3. HLT.');
         assert.deepEqual(expected, actual);

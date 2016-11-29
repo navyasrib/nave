@@ -8,7 +8,7 @@ const assert = require('assert');
 describe('declaration', function() {
     it('NUM x', function() {
         var type = classes.Num;
-        var expected = lib.declare(type, 'x');
+        var expected = [lib.declare(type, 'x')];
         var actual = parser.parse('NUM x.');
 
         assert.deepEqual(expected, actual);
@@ -16,7 +16,7 @@ describe('declaration', function() {
 
     it('STR y', function() {
         var type = classes.Str;
-        var expected = lib.declare(type, 'y');
+        var expected = [lib.declare(type, 'y')];
         var actual = parser.parse('STR y.');
 
         assert.deepEqual(expected, actual);
@@ -83,7 +83,7 @@ describe('declare and Define', function() {
         var type = classes.Num;
         var declaration = lib.declare(type, 'a');
 
-        var expected = lib.assignValue(declaration, new classes.Num(10));
+        var expected = [lib.assignValue(declaration, new classes.Num(10))];
         var actual = parser.parse('NUM a IS 10.');
 
         assert.deepEqual(expected, actual);
@@ -95,7 +95,7 @@ describe('declare and Define', function() {
         var variable = lib.declare(type, 's');
         var string = new classes.Str('somthing');
 
-        var expected = lib.assignValue(variable, string)
+        var expected = [lib.assignValue(variable, string)];
         var actual = parser.parse('STR s IS "somthing".');
 
         assert.deepEqual(expected, actual);
@@ -115,7 +115,7 @@ describe('declare and Define', function() {
 
     it('BOOLEAN c IS FALSE', function() {
         var declaration = lib.declare(classes.Bool, 'c')
-        var expected = lib.assignValue(declaration, new classes.Bool(false));
+        var expected = [lib.assignValue(declaration, new classes.Bool(false))];
         var actual = parser.parse('BOOLEAN c IS FALSE.')
         assert.deepEqual(expected, actual);
     });

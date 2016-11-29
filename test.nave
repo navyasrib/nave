@@ -1,6 +1,11 @@
-NUM x IS 1.
-NUM y IS 2.
-NUM z IS x PLUS 12.
-NUM a IS x PLUS y PLUS z.
-NUM b IS a.
-DISPLAY b.
+BEHAVIOR something IS START
+  NUM sample IS 2.
+  DISPLAY sample AMPLIFY 3.
+HLT.
+
+EXECUTE something.
+
+DISPLAY 1.
+
+STR hello IS "Budduse".
+DISPLAY hello.

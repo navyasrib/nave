@@ -67,6 +67,7 @@ statements
     : statement EOS statements
         {$$ = flatten([$1,$3])}
     | statement EOS
+        {$$ = [$1]}
     ;
 
 statement
