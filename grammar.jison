@@ -32,15 +32,13 @@
 "NOT"                       return '!'
 "IS"                        return '='
 "INCASE"                    return "IF"
-"UNLESS"                    return "UNLESS"
+"UNLESS"                    return "ELSE"
 "DISPLAY"                   return "DISPLAY"
 "START"                     return 'START'
 "HLT"                       return 'HLT'
 "."                         return 'EOS'
 "BEHAVIOR"                  return 'BEHAVIOR'
 "EXECUTE"                   return 'EXECUTE'
-"INCASE"                    return 'IF'
-"UNLESS"                    return 'ELSE'
 <<EOF>>                     return 'EOF'
 .                           return 'INVALID'
 
@@ -82,8 +80,10 @@ statement
     ;
 
 conditional
-    : IF condition block
-        {$$ = new classes.Operation(lib.operations.handleCondition,$2,$3)}
+    : IF condition statement
+        {$$ = new classes.Operation(lib.operations.handleIfCondition,$2,$3)}
+    | ELSE condition statement
+        {$$ = new classes.Operation(lib.operations.handleElseCondition,$2,$3)}
     ;
 
 condition
