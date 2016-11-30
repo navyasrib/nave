@@ -13,6 +13,7 @@
 %lex
 %%
 \s+                         /* skip whitespace */
+"/*"+.+"*\\"                /* skip commented */
 [0-9]+("."[0-9]+)?\b        return 'NUMBER'
 [a-z]+                      return 'IDENTIFIER'
 ["]+[A-z .]+["]             return 'STRING'

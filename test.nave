@@ -1,12 +1,28 @@
+/*============================================ Declaration ============================================*\
+
 NUM a IS 2.
 NUM b IS 3.
+STR shouldprint IS "This should print".
+STR shouldnotprint IS "This should not print".
+
+/*============================================ Usage of INCASE ============================================*\
 
 INCASE a LESSTHAN b START
-  DISPLAY "this should print".
-  DISPLAY a LESSTHAN b.
+  DISPLAY shouldprint.
 HLT.
 
 INCASE b LESSTHAN a START
-  DISPLAY "this should not display".
-  DISPLAY b LESSTHAN a.
+  DISPLAY shouldnotprint.
 HLT.
+
+/*============================================ Usage of UNLESS ============================================*\
+
+UNLESS a LESSTHAN b START
+  DISPLAY shouldnotprint.
+HLT.
+
+UNLESS b LESSTHAN a START
+  DISPLAY shouldprint.
+HLT.
+
+/*============================================ Usage of BEHAVIOR ============================================*\
