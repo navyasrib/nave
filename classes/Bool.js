@@ -1,10 +1,18 @@
 class Bool {
     constructor(bool) {
-        this.value = new Boolean(bool);
+        this.value = bool;
     }
 
     equals(other) {
-        return new Bool(this.value == other.value)
+        return this.value === other.value;
+    }
+
+    evaluate() {
+        return this;
+    }
+
+    toString(){
+      return this.value;
     }
 }
 

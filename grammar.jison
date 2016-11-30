@@ -39,6 +39,8 @@
 "."                         return 'EOS'
 "BEHAVIOR"                  return 'BEHAVIOR'
 "EXECUTE"                   return 'EXECUTE'
+"INCASE"                    return 'IF'
+"UNLESS"                    return 'ELSE'
 <<EOF>>                     return 'EOF'
 .                           return 'INVALID'
 
@@ -77,6 +79,16 @@ statement
     | block
     | execution
     | print
+    ;
+
+conditional
+    : IF condition block
+        {$$ = new classes.Operation(lib.operations.handleCondition,$2,$3)}
+    ;
+
+condition
+    : boolean
+    | E
     ;
 
 print

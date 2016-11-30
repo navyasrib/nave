@@ -1,11 +1,12 @@
-BEHAVIOR something IS START
-  NUM sample IS 2.
-  DISPLAY sample AMPLIFY 3.
+NUM a IS 2.
+NUM b IS 3.
+
+INCASE a LESSTHAN b START
+  DISPLAY "this should print".
+  DISPLAY a LESSTHAN b.
 HLT.
 
-EXECUTE something.
-
-DISPLAY 1.
-
-STR hello IS "Budduse".
-DISPLAY hello.
+INCASE b LESSTHAN a START
+  DISPLAY "this should not display".
+  DISPLAY b LESSTHAN a.
+HLT.
