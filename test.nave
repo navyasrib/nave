@@ -26,3 +26,12 @@ UNLESS b LESSTHAN a START
 HLT.
 
 /*============================================ Usage of BEHAVIOR ============================================*\
+
+BEHAVIOR division IS
+  START
+    NUM numa IS 12.
+    NUM numb IS 4.
+    DISPLAY numa SIMPLIFY numb.
+  HLT.
+
+EXECUTE division.
